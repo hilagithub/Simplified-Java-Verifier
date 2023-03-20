@@ -1,0 +1,50 @@
+
+6.1
+----
+hadling errors- we used exceptions. the smart way of doing it in my opinion is by bubbling up the exception.
+means we need to throw and error but the only function that will catch it is main .
+so we need to "bubble" it all the way up. so we should not deal with it only at the end
+in that way main function will catcjh accordingly the right exception.
+
+
+6.2
+-----
+
+-I could add another regex representing float variables but maybe better way is to
+split it to class of types - an abstract class of type so changes wont have to be made in mutual classes
+so much , only add a class that takes care of float.
+
+-classes- we should also create class classParser that also extends Parser and use parservariables and
+parserMethods to parser.
+-methods return type- i think it can be done by simply adding field to method class.
+
+
+6.3
+-----
+
+regex for int variables parser line:
+
+1.DECLARE_AND_ASSIGN_INT="[\\s]*[a-zA-Z_$][a-zA-Z_$0-9]*[\\s]*[=][\\s]*[(-|+)][\\s]*[0-9]+";
+2. DECLARE_ONLY_INT="[\\s]*[a-zA-Z_$][a-zA-Z_$0-9]*";
+
+3.DEFINE_INT_VARIABLE_REGEX  =  "int[\\s]+"+"[("+DECLARE_ONLY_INT+"|"+DECLARE_AND_ASSIGN_INT+")[\\s]*\\,]*"+
+            "("+DECLARE_ONLY_INT+"|"+DECLARE_AND_ASSIGN_INT+")[\\s]*;[\\n]?";
+
+1.declare+assign->space(0 or more) than the name nust start with charachter and than can be digit..
+more spaces are possible(0/more) than "=" once, spaces again then + or - again spaces(0 or more) and than only digits
+because its int.
+
+2. spaces(0 or more) than at name of variable must start with charachter than it can contain digits/charachters.
+
+3.at first we get  simply int , than it may have some spaces(1 or more) than it may declare it only without assigning or
+assigning also this is why it is like or - "|"  and eventually(after possibly ore spaces) it can declare multiple times ,
+this is why i wrapped all with [...\\,]*so the  regular can repeat itself and finish with , 0 or more times.
+at the end at least 1 declaration/declaration+assigning shoul be done and afterwards ";\\n" (didnt know for sure about
+end of line so added-?)
+
+
+my classes-
+-----------
+i divided to parser+"container(static)" and reading+objects of methods and variables that will be eventually
+in container after parsing.
+in order to separate parsing and creating variables/methods/reading+checking the lines and their storage.
